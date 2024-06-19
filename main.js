@@ -1,17 +1,23 @@
 #!/usr/bin/env node
+//Project 02: Atm
 import inquirer from "inquirer";
+import chalk from "chalk";
+import figlet from "figlet";
+console.log(chalk.yellow(figlet.textSync(`
+                                  My  ATM
+ `)));
 let myBalance = 20000;
 let pincode = 112233;
 let pinAnswer = await inquirer.prompt({
     name: "pin",
-    message: "Enter your pincode",
-    type: "number"
+    message: chalk.bgGray("Enter your pincode"),
+    type: "number",
 });
 if (pinAnswer.pin === pincode) {
-    console.log("Correct pin code");
+    console.log(chalk.blue("Correct pin code"));
     let operationAns = await inquirer.prompt({
         name: "operation",
-        message: "What do you want to do?",
+        message: chalk.bgCyan("What do you want to do?"),
         type: "list",
         choices: ["withdraw", "check balance"],
     });
@@ -19,20 +25,22 @@ if (pinAnswer.pin === pincode) {
         let selectAnswer = await inquirer.prompt([
             {
                 name: "select",
-                message: "enter the amount to withdraw or select fast cash option",
+                message: chalk.bgGray("enter the amount to withdraw or select fast cash option"),
                 type: "list",
-                choices: ["Enter amount", "Fast cash"]
-            }
+                choices: ["Enter amount", "Fast cash"],
+            },
         ]);
         if (selectAnswer.select === "Enter amount") {
-            let amountAnswer = await inquirer.prompt([{
+            let amountAnswer = await inquirer.prompt([
+                {
                     name: "amount",
                     message: "enter the amount",
-                    type: "number"
-                }]);
+                    type: "number",
+                },
+            ]);
             if (amountAnswer.amount <= myBalance) {
                 myBalance -= amountAnswer.amount;
-                console.log(`Successfuly withdrew ${amountAnswer.amount}.Your remaining balance is: ${myBalance}`);
+                console.log(chalk.magentaBright(`Successfuly withdrew ${amountAnswer.amount}.Your remaining balance is: ${myBalance}`));
             }
             else {
                 console.log(`insufficient balance`);
@@ -41,25 +49,25 @@ if (pinAnswer.pin === pincode) {
         else if (selectAnswer.select === "Fast cash") {
             let cashAnswer = await inquirer.prompt({
                 name: "cash",
-                message: "select the amount to withdraw",
+                message: chalk.bgCyanBright("select the amount to withdraw"),
                 type: "list",
                 choices: [
                     { name: "100", value: 100 },
                     { name: "200", value: 200 },
                     { name: "500", value: 500 },
-                    { name: "1000", value: 1000 }
-                ]
+                    { name: "1000", value: 1000 },
+                ],
             });
             if (cashAnswer.cash <= myBalance) {
                 myBalance -= cashAnswer.cash;
-                console.log(`Successfuly withdrew ${cashAnswer.cash}.Your remaining balance is: ${myBalance}`);
+                console.log(chalk.yellow(`Successfuly withdrew ${cashAnswer.cash}.Your remaining balance is: ${myBalance}`));
             }
         }
     }
     else if (operationAns.operation === "check balance") {
-        console.log(`your balance is: ${myBalance}`);
+        console.log(chalk.bgMagenta(`your balance is: ${myBalance}`));
     }
 }
 else {
-    console.log("invalid pincode");
+    console.log(chalk.red("invalid pincode"));
 }

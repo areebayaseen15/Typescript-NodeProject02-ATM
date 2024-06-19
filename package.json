@@ -12,9 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "figlet": "^1.7.0",
     "inquirer": "^9.2.16"
   },
   "devDependencies": {
+    "@types/figlet": "^1.5.8",
     "@types/inquirer": "^9.0.7"
   }
 }
