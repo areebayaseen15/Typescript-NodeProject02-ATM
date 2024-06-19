@@ -40,7 +40,7 @@ if (pinAnswer.pin === pincode) {
       let amountAnswer = await inquirer.prompt([
         {
           name: "amount",
-          message: "enter the amount",
+          message:chalk.bgGrey("enter the amount"),
           type: "number",
         },
       ]);
